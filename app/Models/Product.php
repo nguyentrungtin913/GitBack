@@ -18,7 +18,8 @@ class Product extends BaseModel
         'pro_amount'        => 'amount',
         'pro_amount_sell'   => 'amountSell',
         'pro_note'          => 'note',
-        'pro_type'          => 'type'    
+        'pro_type'          => 'type',
+        'pro_extra'         => 'extra'  
     ];
 
     protected $fillable = [
@@ -30,6 +31,7 @@ class Product extends BaseModel
         'pro_amount_sell',
         'pro_note',
         'pro_type',
+        'pro_extra',
         'pro_deleted'
     ];
     static function query()
