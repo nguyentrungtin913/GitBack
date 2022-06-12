@@ -118,6 +118,7 @@ class ProductController extends Controller
         $amountSell     = $params['amountSell'] ?? 0;
         $note           = $params['note'] ?? null;
         $proType        = $params['type'];
+        $extra          = $params['extra'];
         $image =request('image');
 
         ////////////////////////////////////////
@@ -150,7 +151,8 @@ class ProductController extends Controller
             'pro_amount'        => $amount,
             'pro_amount_sell'   => $amountSell,
             'pro_note'          => $note,
-            'pro_type'          => $proType
+            'pro_type'          => $proType,
+            'pro_extra'         => $extra
         ]);
         if($product){
             $id = $product->pro_id;
@@ -177,6 +179,7 @@ class ProductController extends Controller
         $amountSell     = $params['amountSell'] ?? $product->pro_amount_sell;
         $note           = $params['note'] ?? $product->pro_note;
         $proType        = $params['type'] ?? $product->pro_type;
+        $extra          = $params['extra'] ?? $product->pro_extra;
 
         $file = $params['image'] ?? null;
         if($file){
@@ -219,6 +222,7 @@ class ProductController extends Controller
                 'pro_amount_sell' => $amountSell,
                 'pro_note' => $note,
                 'pro_type' => $proType,
+                'pro_extra' => $extra,
             ])) {
             $product =  $this->productModel->where('pro_id', $params['id'])->with('productType')->first();
             $product = $this->productTransformer->transformItem($product);
