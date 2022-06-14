@@ -104,6 +104,37 @@ class ProductController extends Controller
         $response->header("Content-Type", $type);
         return $response;
     }
+
+    public function getImageByProductID($pro_id)
+    {
+        $id = $pro_id ?? 0;
+        $product = $this->productModel->where('pro_id', $id)->first();
+
+        $ipro =  $this->imageProduct->where('ipro_id', $product['pro_image'])->first();
+        $clientOriginalExtension = 'jpg';
+        if($ipro){
+            $clientOriginalExtension = explode('/',explode(';',strval($ipro->ipro_image))[0])[1];
+            $output_file  = 'storage/app/public/products/tmp.'.$clientOriginalExtension;
+            $ifp = fopen( $output_file, 'wb' ); 
+            $data = explode( ',', $ipro->ipro_image );
+
+            fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+            fclose( $ifp );
+
+            $path = $output_file; 
+        }else{
+            $path = 'storage/app/public/products/no-image.png';            
+        }
+        
+        if (!\File::exists($path)) {
+            abort(404);
+        }
+        $file = \File::get($path);
+        $type =  \File::mimeType($path);
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
+    }
     public function save(Request $request, Response $response)
     {
         $params=$request->all();

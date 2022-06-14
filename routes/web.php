@@ -46,6 +46,7 @@ Route::delete('/product','App\Http\Controllers\ProductController@delete')->middl
 Route::get('/products-sold-out','App\Http\Controllers\ProductController@listProductSoldOut')->middleware('auth');
 
 Route::get('/image/{image}','App\Http\Controllers\ProductController@getImage');
+Route::get('/image/product/{pro_id}','App\Http\Controllers\ProductController@getImageByProductID');
 Route::post('/products-by-id','App\Http\Controllers\ProductController@getProductsByArrayId');
 Route::post('/customer-buy','App\Http\Controllers\ProductController@addToCart');
 
